@@ -29,28 +29,20 @@ namespace CMG.BallMazeGame
             {
                 Destroy(this);
             }
+
+            _ball.ResetEvent += ResetGame;
         }
 
-        private void Update()
+        public void ResetGame()
         {
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                StartCoroutine(ResetGamePositions());
-            }
-
-            // call mqtt client
-            callMqttClient();
-        }
-
-        async private void callMqttClient()
-        {
-            //await MqttClientExample.Main();
+            StartCoroutine(ResetGamePositions());
         }
 
         private IEnumerator ResetGamePositions()
         {
+            yield return new WaitForSeconds(.5f);
             ResetBoard();
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(.2f);
             ResetBall();
         }
 
