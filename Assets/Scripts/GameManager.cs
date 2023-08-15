@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -28,20 +29,28 @@ namespace CMG.BallMazeGame
             {
                 Destroy(this);
             }
-
-            _ball.ResetEvent += ResetGame;
         }
 
-        public void ResetGame()
+        private void Update()
         {
-            StartCoroutine(ResetGamePositions());
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StartCoroutine(ResetGamePositions());
+            }
+
+            // call mqtt client
+            callMqttClient();
         }
-        
+
+        async private void callMqttClient()
+        {
+            //await MqttClientExample.Main();
+        }
+
         private IEnumerator ResetGamePositions()
         {
-            yield return new WaitForSeconds(.5f);
             ResetBoard();
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForEndOfFrame();
             ResetBall();
         }
 
