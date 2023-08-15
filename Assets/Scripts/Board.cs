@@ -40,9 +40,5 @@ namespace CMG.BallMazeGame
             _xRot = 0;
             _zRot = 0;
         }
-        
-        //Get data in from the PI.
-        //Handle data, so convert, clamp and normalize it if necessary.
-        //Set the rotation on the outer and inner board.
     }
 }

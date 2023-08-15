@@ -5,6 +5,8 @@ namespace CMG.BallMazeGame
 {
     public class Ball : MonoBehaviour
     {
+        public event Action ResetEvent;
+
         [SerializeField] private Transform _ballStartPosition;
         [SerializeField] private Rigidbody _rigidbody;
 
@@ -13,6 +15,14 @@ namespace CMG.BallMazeGame
             if (collision.gameObject.CompareTag("SubtractLife"))
             {
                 GameManager.Instance.SubtractLife();
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("ResetZone"))
+            {
+                ResetEvent?.Invoke();
             }
         }
 
