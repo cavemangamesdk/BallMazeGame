@@ -37,6 +37,14 @@ namespace CMG.BallMazeGame
             {
                 StartCoroutine(ResetGamePositions());
             }
+
+            // call mqtt client
+            callMqttClient();
+        }
+
+        async private void callMqttClient()
+        {
+            //await MqttClientExample.Main();
         }
 
         private IEnumerator ResetGamePositions()
