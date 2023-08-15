@@ -16,7 +16,7 @@ public class WebsocketClient : MonoBehaviour
 
     private void WsOnOnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log($"Message from: {((WebSocket)sender)}, Data: {e}");
+        Debug.Log($"Message from: {((WebSocket)sender)}, Data: {e.Data}");
     }
 
     private void Update()
