@@ -1,3 +1,4 @@
+using CMG.BallMazeGame.Models;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -16,18 +17,27 @@ namespace CMG.BallMazeGame
 
         private void Update()
         {
-            HandleInput();
+            //HandleInput();
             SetRotation();
         }
 
-        private void HandleInput()
+        public void HandleInput(float[] data)
         {
-            _xRot -= Input.GetAxisRaw("Vertical") * Time.deltaTime * _tiltSpeedModifier;
-            _zRot += Input.GetAxisRaw("Horizontal") * Time.deltaTime * _tiltSpeedModifier;
-
-            _xRot = Mathf.Clamp(_xRot, -8, 8);
-            _zRot = Mathf.Clamp(_zRot, -8, 8);
+            // Debug.Log($"X Raw: {data.pitch}");
+            // Debug.Log($"Z Raw: {data.roll}");
+            
+            _xRot = data[1];
+            _zRot = data[0];
         }
+        
+        // private void HandleInput()
+        // {
+        //     _xRot -= Input.GetAxisRaw("Vertical") * Time.deltaTime * _tiltSpeedModifier;
+        //     _zRot += Input.GetAxisRaw("Horizontal") * Time.deltaTime * _tiltSpeedModifier;
+        //
+        //     _xRot = Mathf.Clamp(_xRot, -8, 8);
+        //     _zRot = Mathf.Clamp(_zRot, -8, 8);
+        // }
 
         private void SetRotation()
         {

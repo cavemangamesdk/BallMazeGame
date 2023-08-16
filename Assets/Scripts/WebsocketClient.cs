@@ -1,6 +1,9 @@
 using System;
+using CMG.BallMazeGame;
+using CMG.BallMazeGame.Models;
 using UnityEngine;
 using WebSocketSharp;
+using Newtonsoft.Json;
 
 public class WebsocketClient : MonoBehaviour
 {
@@ -16,7 +19,15 @@ public class WebsocketClient : MonoBehaviour
 
     private void WsOnOnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log($"Message from: {((WebSocket)sender)}, Data: {e.Data}");
+        Debug.Log($"Data: {e.Data}");
+        var splitString = e.Data.Split(',');
+        float[] dataSet = new float[2];
+        for (int i = 0; i < splitString.Length; i++)
+        {
+            dataSet[i] = float.Parse(splitString[i]);
+        }
+        
+        GameManager.Instance.HandleInput(dataSet);
     }
 
     private void Update()
@@ -31,6 +42,9 @@ public class WebsocketClient : MonoBehaviour
             _ws.Send("Hello Michael!");
         }
     }
-    
-    
+
+    private void OnApplicationQuit()
+    {
+        _ws.Close();
+    }
 }

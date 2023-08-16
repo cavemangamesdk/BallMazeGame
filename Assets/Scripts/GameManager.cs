@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CMG.BallMazeGame.Models;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -46,6 +47,11 @@ namespace CMG.BallMazeGame
             ResetBall();
         }
 
+        public void HandleInput(float[] data)
+        {
+            _board.HandleInput(data);
+        }
+        
         private void ResetBoard()
         {
             _board.ResetBoard();
