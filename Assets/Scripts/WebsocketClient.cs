@@ -23,7 +23,7 @@ public class WebsocketClient : MonoBehaviour
 
         // Receive the broadcasted message
         IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-
+        
         //byte[] receivedBytes = udpClient.Receive(ref remoteEndPoint);
         //string message = Encoding.UTF8.GetString(receivedBytes);
 
@@ -43,7 +43,7 @@ public class WebsocketClient : MonoBehaviour
     {
         Debug.Log($"Data: {e.Data}");
         var splitString = e.Data.Split(',');
-        float[] dataSet = new float[2];
+        float[] dataSet = new float[3];
         for (int i = 0; i < splitString.Length; i++)
         {
             dataSet[i] = float.Parse(splitString[i]);
