@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SubtractLife
   - ResetZone
+  - FinishZone
   layers:
   - Default
   - TransparentFX

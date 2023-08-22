@@ -6,6 +6,7 @@ namespace CMG.BallMazeGame
     public class Ball : MonoBehaviour
     {
         public event Action ResetEvent;
+        public event Action FinishEvent;
 
         [SerializeField] private Transform _ballStartPosition;
         [SerializeField] private Rigidbody _rigidbody;
@@ -23,6 +24,11 @@ namespace CMG.BallMazeGame
             if (other.CompareTag("ResetZone"))
             {
                 ResetEvent?.Invoke();
+            }
+
+            if (other.CompareTag("FinishZone"))
+            {
+                FinishEvent?.Invoke();
             }
         }
 
