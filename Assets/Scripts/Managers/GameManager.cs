@@ -34,6 +34,8 @@ namespace CMG.BallMazeGame
             
             _ball.ResetEvent += ResetGame;
             _ball.FinishEvent += OnFinishEvent;
+            
+            UIManager.StartTimer();
         }
 
         private void OnFinishEvent()
