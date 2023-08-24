@@ -11,32 +11,51 @@ namespace CMG.BallMazeGame
         private int _seconds = 0;
         private int _minutes = 0;
         private float _startTime = 0;
-
-        private bool _runTimer;
+        private float _offsetTime = 0;
+        
+        private bool _runTimer = false;
         
         private void Update()
         {
+            if (_runTimer == false) return;
+            
             RunTimer();
         }
 
         private void RunTimer()
         {
-            _startTime = Time.time;
+            _startTime = Time.time - _offsetTime;
             _milliseconds = (int)(_startTime * 100) % 100;
             _seconds = (int)_startTime % 60;
             _minutes = (int)_startTime / 60;
 
+            SetTimerTxt();
+        }
+
+        private void SetTimerTxt()
+        {
             _timerTxt.text = string.Format("{0:00}:{1:00}:{2:00}", _minutes, _seconds, _milliseconds);
         }
-
-        private void StartTimer()
+        
+        public void StartTimer()
         {
-            
+            _offsetTime = Time.time;
+            _runTimer = true;
         }
 
-        private void StopTimer()
+        public void StopTimer()
         {
+            _runTimer = false;
+        }
+
+        public void ResetTimer()
+        {
+            _milliseconds = 0;
+            _seconds = 0;
+            _minutes = 0;
+            _startTime = 0;
             
+            SetTimerTxt();
         }
     }
 }
