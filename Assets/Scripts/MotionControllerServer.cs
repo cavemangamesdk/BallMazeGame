@@ -1,6 +1,5 @@
+using System;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
@@ -9,20 +8,22 @@ namespace CMG.BallMazeGame.Tester
 {
     public class MotionControllerServer : MonoBehaviour
     {
+        public Action<string, int> OnMulticastResponse;
+
         [SerializeField] private string _host;
         private WebSocketServer _ws;
-        
+
+        internal static IMulticastConnector MulticastConnector { get; private set; }
+
         private void Start()
         {
-            var hostname = Dns.GetHostName();
+            MulticastConnector = GetComponent<IMulticastConnector>();
 
-            var ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList
-                .First(ips => ips.AddressFamily == AddressFamily.InterNetwork)
-                .ToString();
+            var ip = NetworkUtils.GetLocalIPAddress();
 
             _host = $"ws://{ip}:80/";
             _ws = new WebSocketServer(_host);
-            
+
             _ws.AddWebSocketService<MessageBehavior>("/MotionController");
             _ws.Start();
         }
@@ -35,7 +36,12 @@ namespace CMG.BallMazeGame.Tester
 
     public class MessageBehavior : WebSocketBehavior
     {
-        protected override void OnMessage( MessageEventArgs e)
+        protected override void OnOpen()
+        {
+            MotionControllerServer.MulticastConnector.Shutdown();
+        }
+
+        protected override void OnMessage(MessageEventArgs e)
         {
             //TextTester.Instance.SetText(e.Data);
             Debug.Log($"Data: {e.Data}");
@@ -45,7 +51,7 @@ namespace CMG.BallMazeGame.Tester
             {
                 dataSet[i] = float.Parse(splitString[i]);
             }
-        
+
             GameManager.Instance.HandleInput(dataSet);
         }
     }
