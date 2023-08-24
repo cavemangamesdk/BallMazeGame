@@ -10,7 +10,6 @@ namespace CMG.BallMazeGame
         [SerializeField] private Transform _outerBoard;
 
         private float _xRot;
-        private float _yRot;
         private float _zRot;
 
         private Vector3 _innerBoardRotation;
@@ -28,8 +27,7 @@ namespace CMG.BallMazeGame
             // Debug.Log($"Z Raw: {data.roll}");
 
             _xRot = data[0];
-            _yRot = data[1];
-            _zRot = data[2];
+            _zRot = data[1];
         }
         
         // private void HandleInput()
@@ -43,17 +41,16 @@ namespace CMG.BallMazeGame
 
         private void SetRotation()
         {
-            _yRot = Mathf.Clamp(_yRot, -10.0f, 10.0f);
-            _zRot = Mathf.Clamp(_zRot, -10.0f, 10.0f);
+            _xRot = Mathf.Clamp(_xRot, -8.0f, 8.0f);
+            _zRot = Mathf.Clamp(_zRot, -8.0f, 8.0f);
             
-            _innerBoard.localRotation = Quaternion.Euler(_yRot, 0, 0);
+            _innerBoard.localRotation = Quaternion.Euler(_xRot, 0, 0);
             _outerBoard.localRotation = Quaternion.Euler(0, 0, _zRot);
         }
 
         public void ResetBoard()
         {
             _xRot = 0;
-            _yRot = 0;
             _zRot = 0;
         }
     }

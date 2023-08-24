@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -9,6 +10,9 @@ namespace CMG.BallMazeGame
         [SerializeField] private GameObject _lastLife;
         [SerializeField] private GameObject _secondLife;
         [SerializeField] private GameObject _thirdLife;
+
+        [SerializeField] private GameObject _startScreen;
+        [SerializeField] private GameObject _gameScreen;
         
         public void StartTimer()
         {
@@ -39,6 +43,16 @@ namespace CMG.BallMazeGame
             {
                 _lastLife.SetActive(false);
             }
+        }
+
+        public void HandleGameScreen(bool show)
+        {
+            _gameScreen.SetActive(show);   
+        }
+        
+        public void HandleStartScreen(bool show)
+        {
+            _startScreen.SetActive(show);
         }
     }
 }
