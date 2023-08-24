@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 
-public class WebsocketClient : MonoBehaviour
+public class WebsocketClient2 : MonoBehaviour
 {
     private WebSocket _ws;
     [SerializeField] private string _host;
@@ -49,7 +49,7 @@ public class WebsocketClient : MonoBehaviour
             dataSet[i] = float.Parse(splitString[i]);
         }
         
-        GameManager.Instance.HandleInput(dataSet);
+        GameManager2.Instance.HandleInput(dataSet);
     }
 
     private void Update()

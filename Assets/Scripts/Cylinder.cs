@@ -3,20 +3,15 @@ using UnityEngine;
 
 namespace CMG.BallMazeGame
 {
-    public class Board : MonoBehaviour
+    public class Cylinder : MonoBehaviour
     {
-        [SerializeField] private float _tiltSpeedModifier = 1;
-        [SerializeField] private Transform _innerBoard;
-        [SerializeField] private Transform _outerBoard;
+        [SerializeField] private Vector3 Rot;
+        [SerializeField] private Vector3 Acc;
+        [SerializeField] private Vector3 Pos;
+        [SerializeField] private Vector3 Vel;
+        [SerializeField] private int test;
 
-        private float _xRot;
-        private float _yRot;
-        private float _zRot;
-
-        private Vector3 _innerBoardRotation;
-        private Vector3 _outerBoardRotation;
-
-        private void Update()
+        private void FixedUpdate()
         {
             //HandleInput();
             SetRotation();
@@ -26,10 +21,13 @@ namespace CMG.BallMazeGame
         {
             // Debug.Log($"X Raw: {data.pitch}");
             // Debug.Log($"Z Raw: {data.roll}");
-
-            _xRot = data[0];
-            _yRot = data[1];
-            _zRot = data[2];
+            test += 1;
+            
+            Rot = new Vector3(data[0], data[1], data[2]);
+            Acc = new Vector3(data[3], data[4], data[5]);
+            Vel += Acc * 0.02f;
+            Pos += Vel * 0.02f;
+            
         }
         
         // private void HandleInput()
@@ -45,16 +43,17 @@ namespace CMG.BallMazeGame
         {
             //_yRot = Mathf.Clamp(_yRot, -10.0f, 10.0f);
             //_zRot = Mathf.Clamp(_zRot, -10.0f, 10.0f);
-            
-            _innerBoard.localRotation = Quaternion.Euler(_xRot, 0, 0);
-            _outerBoard.localRotation = Quaternion.Euler(0, 0, _zRot);
+
+            //_innerBoard.localRotation = Quaternion.Euler(_xRot, 0, 0);
+            //_outerBoard.localRotation = Quaternion.Euler(0, 0, _zRot);
+
+            transform.localRotation = Quaternion.Euler(Rot);
+            //transform.position = Pos;
         }
 
         public void ResetBoard()
         {
-            _xRot = 0;
-            _yRot = 0;
-            _zRot = 0;
+            Rot = Vector3.zero;
         }
     }
 }
