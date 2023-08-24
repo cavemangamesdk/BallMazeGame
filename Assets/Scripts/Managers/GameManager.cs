@@ -36,8 +36,6 @@ namespace CMG.BallMazeGame
             
             _ball.ResetEvent += ResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
-            
-            UIManager.StartTimer();
         }
 
         private void Update()
@@ -104,11 +102,14 @@ namespace CMG.BallMazeGame
                 case GameState.Start:
                     break;
                 case GameState.GameRunning:
+                    UIManager.ResetTimer();
+                    UIManager.StartTimer();
                     GameOver = false;
                     UIManager.HandleGameScreen(true);
                     UIManager.HandleStartScreen(false);
                     break;
                 case GameState.GameOver:
+                    UIManager.StopTimer();
                     GameOver = true;
                     UIManager.HandleGameScreen(true);
                     UIManager.HandleStartScreen(false);

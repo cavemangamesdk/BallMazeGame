@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
@@ -11,6 +14,13 @@ namespace CMG.BallMazeGame.Tester
         
         private void Start()
         {
+            var hostname = Dns.GetHostName();
+
+            var ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                .First(ips => ips.AddressFamily == AddressFamily.InterNetwork)
+                .ToString();
+
+            _host = $"ws://{ip}:80/";
             _ws = new WebSocketServer(_host);
             
             _ws.AddWebSocketService<MessageBehavior>("/MotionController");
