@@ -9,7 +9,8 @@ namespace CMG.BallMazeGame
         public static GameManager Instance;
         public bool GameOver { get; private set; }
         public UIManager UIManager { get; private set; }
-
+        public int Lives { get => _lives; }
+        
         [SerializeField] private GameObject _menuCamera;
         [SerializeField] private GameObject _gameCamera;
         
@@ -19,6 +20,7 @@ namespace CMG.BallMazeGame
         [SerializeField] private int _lives = 3;
 
         private GameState _gameState = GameState.Start;
+        private Coroutine _resetRoutine;
         
         private void Awake()
         {
@@ -33,6 +35,8 @@ namespace CMG.BallMazeGame
             }
 
             UIManager = GetComponent<UIManager>();
+
+            UIManager.SubmitEvent += ResetGame;
             
             _ball.ResetEvent += ResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
@@ -57,13 +61,15 @@ namespace CMG.BallMazeGame
 
         public void ResetGame()
         {
+            ChangeState(GameState.Start);
         }
-
+        
         public void ResetGamePosition()
         {
-            if (GameOver == true) return;
+            if (_resetRoutine != null)
+                StopCoroutine(_resetRoutine);
             
-            StartCoroutine(ResetGamePositionsRoutine());
+            _resetRoutine = StartCoroutine(ResetGamePositionsRoutine());
         }
 
         private IEnumerator ResetGamePositionsRoutine()
@@ -93,6 +99,9 @@ namespace CMG.BallMazeGame
         {
             _lives--;
             UIManager.UpdateLivesUI(_lives);
+
+            if (_lives <= 0)
+                ChangeState(GameState.GameOver);
         }
 
         private void ChangeState(GameState newState)
@@ -100,19 +109,24 @@ namespace CMG.BallMazeGame
             switch (newState)
             {
                 case GameState.Start:
+                    GameOver = true;
+                    _lives = 3;
+                    UIManager.UpdateLivesUI(_lives);
+                    UIManager.StopTimer();
+                    UIManager.ResetTimer();
+                    UIManager.HandleGameUI(newState);
                     break;
                 case GameState.GameRunning:
+                    GameOver = false;
                     UIManager.ResetTimer();
                     UIManager.StartTimer();
-                    GameOver = false;
-                    UIManager.HandleGameScreen(true);
-                    UIManager.HandleStartScreen(false);
+                    UIManager.HandleGameUI(newState);
                     break;
                 case GameState.GameOver:
-                    UIManager.StopTimer();
                     GameOver = true;
-                    UIManager.HandleGameScreen(true);
-                    UIManager.HandleStartScreen(false);
+                    ResetGamePosition();
+                    UIManager.StopTimer();
+                    UIManager.HandleGameUI(newState);
                     break;
             }
 

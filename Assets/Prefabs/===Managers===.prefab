@@ -76,7 +76,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7252f340e270aa045b64bf173debc008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTimer: {fileID: 0}
+  _gameTimer: {fileID: 6063416054679798469}
   _lastLife: {fileID: 0}
   _secondLife: {fileID: 0}
   _thirdLife: {fileID: 0}
+  _startScreen: {fileID: 0}
+  _gameScreen: {fileID: 0}
+  _gameOverScreen: {fileID: 0}
+  _timeTxt: {fileID: 0}
+  _nameInputField: {fileID: 0}
+  _submitButton: {fileID: 0}

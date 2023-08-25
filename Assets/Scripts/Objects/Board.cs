@@ -1,4 +1,5 @@
 using CMG.BallMazeGame.Models;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -41,6 +42,8 @@ namespace CMG.BallMazeGame
 
         private void SetRotation()
         {
+            if (GameManager.Instance.GameOver == false) return;
+            
             _xRot = Mathf.Clamp(_xRot, -8.0f, 8.0f);
             _zRot = Mathf.Clamp(_zRot, -8.0f, 8.0f);
             

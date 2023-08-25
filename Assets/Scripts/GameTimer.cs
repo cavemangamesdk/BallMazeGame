@@ -46,6 +46,7 @@ namespace CMG.BallMazeGame
         public void StopTimer()
         {
             _runTimer = false;
+            GameManager.Instance.UIManager.AddTimeTxt(_timerTxt.text);
         }
 
         public void ResetTimer()
