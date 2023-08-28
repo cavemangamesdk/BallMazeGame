@@ -546,35 +546,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6587047613843880654, guid: aae9d4d8d399b524181f397571483721, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2299242896044401961, guid: aae9d4d8d399b524181f397571483721,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1233526063}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aae9d4d8d399b524181f397571483721, type: 3}
---- !u!1 &1233526062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2299242896044401961, guid: aae9d4d8d399b524181f397571483721,
-    type: 3}
-  m_PrefabInstance: {fileID: 1233526061}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1233526063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233526062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81eefb152b5ee39468a52b59ab9abe59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _host: 
 --- !u!114 &1284983977 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5412792840102443561, guid: e91a4a7784d9c74489140f59998eef8a,
@@ -744,7 +720,7 @@ PrefabInstance:
     - target: {fileID: 5514510116407258443, guid: fbd8657b5a3ed3a42a272d35d7a6dd63,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4236
+      value: 0.4645
       objectReference: {fileID: 0}
     - target: {fileID: 5514510116407258443, guid: fbd8657b5a3ed3a42a272d35d7a6dd63,
         type: 3}
@@ -957,6 +933,11 @@ PrefabInstance:
     - target: {fileID: 4107977937561919032, guid: b06d9a572b50f6541b36d0b937c0e9d4,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614732209121256354, guid: b06d9a572b50f6541b36d0b937c0e9d4,
+        type: 3}
+      propertyPath: m_DefaultBlend.m_Time
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8852039097797709741, guid: b06d9a572b50f6541b36d0b937c0e9d4,

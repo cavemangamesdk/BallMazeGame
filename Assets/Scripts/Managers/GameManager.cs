@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cinemachine;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -38,9 +39,11 @@ namespace CMG.BallMazeGame
 
             UIManager.SubmitEvent += ResetGame;
             
-            _ball.ResetEvent += ResetGamePosition;
+            _ball.ResetEvent += OnResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
+            _ball.LostLife += OnLostLife;
         }
+
 
         private void Update()
         {
@@ -59,12 +62,18 @@ namespace CMG.BallMazeGame
             ChangeState(GameState.GameOver);
         }
 
+        
+        private void OnLostLife()
+        {
+            _gameCamera.GetComponent<CinemachineVirtualCamera>().Follow = null;
+        }
+        
         public void ResetGame()
         {
             ChangeState(GameState.Start);
         }
         
-        public void ResetGamePosition()
+        public void OnResetGamePosition()
         {
             if (_resetRoutine != null)
                 StopCoroutine(_resetRoutine);
@@ -78,6 +87,7 @@ namespace CMG.BallMazeGame
             ResetBoard();
             yield return new WaitForSeconds(.2f);
             ResetBall();
+            _gameCamera.GetComponent<CinemachineVirtualCamera>().Follow = _ball.transform;
         }
 
         public void HandleInput(float[] data)
@@ -118,13 +128,17 @@ namespace CMG.BallMazeGame
                     break;
                 case GameState.GameRunning:
                     GameOver = false;
+                    _menuCamera.SetActive(false);
+                    _gameCamera.SetActive(true);
                     UIManager.ResetTimer();
                     UIManager.StartTimer();
                     UIManager.HandleGameUI(newState);
                     break;
                 case GameState.GameOver:
                     GameOver = true;
-                    ResetGamePosition();
+                    _menuCamera.SetActive(true);
+                    _gameCamera.SetActive(false);
+                    OnResetGamePosition();
                     UIManager.StopTimer();
                     UIManager.HandleGameUI(newState);
                     break;
