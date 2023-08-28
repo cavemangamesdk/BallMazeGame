@@ -24,14 +24,20 @@ namespace CMG.BallMazeGame.Data
             if (requestRoutine != null)
                 StopCoroutine(requestRoutine);
 
-            File.WriteAllText("D:\\Projects\\data.txt", json);
+            //File.WriteAllText("D:\\Projects\\data.txt", json);
 
-            //requestRoutine = StartCoroutine(HandleWebrequestRoutine(json));
+            requestRoutine = StartCoroutine(HandleWebrequestRoutine(json));
         }
 
         IEnumerator HandleWebrequestRoutine(string data)
         {
-            var request = new UnityWebRequest(_url, data);
+            var url = new Uri(_url);
+            var request = new UnityWebRequest(url, "POST");
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(data);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            
             yield return request.SendWebRequest();
 
             if (request.result != UnityWebRequest.Result.Success)
