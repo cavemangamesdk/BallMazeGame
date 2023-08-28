@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-namespace CMG.BallMazeGame.Tester
+namespace CMG.BallMazeGame
 {
     internal interface IMulticastConnector
     {

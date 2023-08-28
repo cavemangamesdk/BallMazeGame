@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace CMG.BallMazeGame
         private float _offsetTime = 0;
         
         private bool _runTimer = false;
-        
+
         private void Update()
         {
             if (_runTimer == false) return;

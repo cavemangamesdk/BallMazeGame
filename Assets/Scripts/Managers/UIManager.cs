@@ -1,5 +1,5 @@
 using System;
-using Newtonsoft.Json.Bson;
+using CMG.BallMazeGame.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,8 +8,8 @@ namespace CMG.BallMazeGame
 {
     public class UIManager : MonoBehaviour
     {
-        public event Action SubmitEvent;
-        
+        public event Action<PlayerData> SubmitEvent;
+
         [SerializeField] private GameTimer _gameTimer;
 
         [SerializeField] private GameObject _lastLife;
@@ -29,7 +29,11 @@ namespace CMG.BallMazeGame
             _submitButton.onClick.AddListener(SubmitPlayerData);
             _nameInputField.onValidateInput += delegate(string s, int i, char c)
             {
-                if (s.Length >= 12){ return '\0'; }
+                if (s.Length >= 12)
+                {
+                    return '\0';
+                }
+
                 return char.ToUpper(c);
             };
         }
@@ -48,7 +52,7 @@ namespace CMG.BallMazeGame
         {
             _gameTimer.ResetTimer();
         }
-        
+
         public void UpdateLivesUI(int lives)
         {
             if (lives == 3)
@@ -95,9 +99,9 @@ namespace CMG.BallMazeGame
 
         public void HandleGameScreen(bool show)
         {
-            _gameScreen.SetActive(show);   
+            _gameScreen.SetActive(show);
         }
-        
+
         public void HandleStartScreen(bool show)
         {
             _startScreen.SetActive(show);
@@ -116,10 +120,20 @@ namespace CMG.BallMazeGame
 
         private void SubmitPlayerData()
         {
-            var result = GameManager.Instance.Lives > 0 ? $"won the game with {GameManager.Instance.Lives} lives left" : "lost the game";
-                
+            var result = GameManager.Instance.Lives > 0
+                ? $"won the game with {GameManager.Instance.Lives} lives left"
+                : "lost the game";
+
             Debug.Log($"Player: {_nameInputField.text} has {result}, with a time of {_timeTxt.text}");
-            SubmitEvent?.Invoke();
+            
+            var data = new PlayerData()
+            {
+                Name = _nameInputField.text,
+                Lives = GameManager.Instance.Lives,
+                GameTime = _timeTxt.text
+            };
+            
+            SubmitEvent?.Invoke(data);
         }
     }
 }

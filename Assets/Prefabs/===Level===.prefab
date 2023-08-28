@@ -390,6 +390,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Labyrinth
       objectReference: {fileID: 0}
+    - target: {fileID: 473391793747002055, guid: 1ce3fefc7df5545408036792aa364575,
+        type: 3}
+      propertyPath: m_TagString
+      value: Board
+      objectReference: {fileID: 0}
     - target: {fileID: 488827897318021118, guid: 1ce3fefc7df5545408036792aa364575,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -531,11 +536,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4478390610759508444, guid: 1ce3fefc7df5545408036792aa364575,
+        type: 3}
+      propertyPath: m_TagString
+      value: InnerBoard
+      objectReference: {fileID: 0}
     - target: {fileID: 6257589567485722296, guid: 1ce3fefc7df5545408036792aa364575,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1595a8a43d9008449abf7f0103bafed5, type: 2}
+    - target: {fileID: 7782054008468375469, guid: 1ce3fefc7df5545408036792aa364575,
+        type: 3}
+      propertyPath: m_TagString
+      value: OuterBoard
+      objectReference: {fileID: 0}
     - target: {fileID: 8357301136231068406, guid: 1ce3fefc7df5545408036792aa364575,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

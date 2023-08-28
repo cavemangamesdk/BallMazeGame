@@ -7,6 +7,10 @@ TagManager:
   - SubtractLife
   - ResetZone
   - FinishZone
+  - Ball
+  - Board
+  - InnerBoard
+  - OuterBoard
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using Cinemachine;
+using CMG.BallMazeGame.Data;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -68,7 +68,7 @@ namespace CMG.BallMazeGame
             _gameCamera.GetComponent<CinemachineVirtualCamera>().Follow = null;
         }
         
-        public void ResetGame()
+        public void ResetGame(PlayerData playerData)
         {
             ChangeState(GameState.Start);
         }

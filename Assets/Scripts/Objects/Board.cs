@@ -1,5 +1,3 @@
-using CMG.BallMazeGame.Models;
-using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
 namespace CMG.BallMazeGame
@@ -10,6 +8,8 @@ namespace CMG.BallMazeGame
         [SerializeField] private Transform _innerBoard;
         [SerializeField] private Transform _outerBoard;
 
+        public Vector2 BoardInput { get; private set; }
+        
         private float _xRot;
         private float _zRot;
 
@@ -18,7 +18,7 @@ namespace CMG.BallMazeGame
 
         private void Update()
         {
-            //HandleInput();
+            HandleInput();
             SetRotation();
         }
 
@@ -29,20 +29,22 @@ namespace CMG.BallMazeGame
 
             _xRot = data[0];
             _zRot = data[1];
+
+            BoardInput = new Vector2(_xRot, _zRot);
         }
         
-        // private void HandleInput()
-        // {
-        //     _xRot -= Input.GetAxisRaw("Vertical") * Time.deltaTime * _tiltSpeedModifier;
-        //     _zRot += Input.GetAxisRaw("Horizontal") * Time.deltaTime * _tiltSpeedModifier;
-        //
-        //     _xRot = Mathf.Clamp(_xRot, -8, 8);
-        //     _zRot = Mathf.Clamp(_zRot, -8, 8);
-        // }
+        private void HandleInput()
+        {
+            _xRot -= Input.GetAxisRaw("Vertical") * Time.deltaTime * _tiltSpeedModifier;
+            _zRot += Input.GetAxisRaw("Horizontal") * Time.deltaTime * _tiltSpeedModifier;
+        
+            _xRot = Mathf.Clamp(_xRot, -8, 8);
+            _zRot = Mathf.Clamp(_zRot, -8, 8);
+        }
 
         private void SetRotation()
         {
-            if (GameManager.Instance.GameOver == false) return;
+            if (GameManager.Instance.GameOver == true) return;
             
             _xRot = Mathf.Clamp(_xRot, -8.0f, 8.0f);
             _zRot = Mathf.Clamp(_zRot, -8.0f, 8.0f);

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8822401135721787551}
   - component: {fileID: 8973499519638828898}
+  - component: {fileID: 2022913505790465820}
   m_Layer: 0
   m_Name: ===Network===
   m_TagString: Untagged
@@ -45,3 +46,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _host: 
+--- !u!114 &2022913505790465820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2299242896044401961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b522dc68322c20439688aea556e737a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _url: https://h4motion.victorkrogh.dk/api/v1/game/sessions

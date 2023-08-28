@@ -49,7 +49,7 @@ namespace CMG.BallMazeGame
             if (Physics.Raycast(transform.position,transform.InverseTransformDirection(transform.up),out hit,0.03f))
             {
                 Debug.Log(hit.collider.name);
-                transform.position = hit.point + new Vector3(0, 0.5f, 0);
+                transform.position = hit.point + new Vector3(0, 0.05f, 0);
             }   
         }
         

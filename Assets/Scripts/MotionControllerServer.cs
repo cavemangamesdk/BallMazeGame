@@ -4,7 +4,7 @@ using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace CMG.BallMazeGame.Tester
+namespace CMG.BallMazeGame
 {
     public class MotionControllerServer : MonoBehaviour
     {
@@ -44,9 +44,9 @@ namespace CMG.BallMazeGame.Tester
         protected override void OnMessage(MessageEventArgs e)
         {
             //TextTester.Instance.SetText(e.Data);
-            Debug.Log($"Data: {e.Data}");
+            //Debug.Log($"Data: {e.Data}");
             var splitString = e.Data.Split(',');
-            float[] dataSet = new float[3];
+            float[] dataSet = new float[2];
             for (int i = 0; i < splitString.Length; i++)
             {
                 dataSet[i] = float.Parse(splitString[i]);

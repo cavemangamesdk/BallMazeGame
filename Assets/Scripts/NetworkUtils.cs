@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace CMG.BallMazeGame.Tester
+namespace CMG.BallMazeGame
 {
     internal static class NetworkUtils
     {
