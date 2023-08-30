@@ -24,7 +24,7 @@ namespace CMG.BallMazeGame.Data
             if (requestRoutine != null)
                 StopCoroutine(requestRoutine);
 
-            //File.WriteAllText("D:\\Projects\\data.txt", json);
+            File.WriteAllText("D:\\Projects\\data.txt", json);
 
             requestRoutine = StartCoroutine(HandleWebrequestRoutine(json));
         }
@@ -42,7 +42,7 @@ namespace CMG.BallMazeGame.Data
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(request.error);
+                Debug.Log(request.downloadHandler.error);
             }
             else
             {

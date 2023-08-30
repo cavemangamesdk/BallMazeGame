@@ -57,6 +57,9 @@ namespace CMG.BallMazeGame
         {
             _xRot = 0;
             _zRot = 0;
+            
+            _innerBoard.localRotation = Quaternion.Euler(_xRot, 0, 0);
+            _outerBoard.localRotation = Quaternion.Euler(0, 0, _zRot);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CMG.BallMazeGame.Data
 
         [SerializeField] private GameData[] _gameDataArray = new GameData[200000];
 
-        private int index = 0;
+        private int _index = 0;
         
         private void Awake()
         {
@@ -21,7 +21,10 @@ namespace CMG.BallMazeGame.Data
             _innerBoardRot = GameObject.FindWithTag("InnerBoard").GetComponent<Transform>();
             _outerboardRot = GameObject.FindWithTag("OuterBoard").GetComponent<Transform>();
             _boardInput = GameObject.FindWithTag("Board").GetComponent<Board>();
-            
+        }
+
+        private void Start()
+        {
             GameManager.Instance.UIManager.SubmitEvent += OnSubmitEvent;
         }
 
@@ -37,6 +40,9 @@ namespace CMG.BallMazeGame.Data
             };
             
             NetworkDataHandler.Instance.HandleWebrequest(sessionData);
+
+            _index = 0;
+            _gameDataArray = new GameData[200000];
         }
 
         private void Update()
@@ -51,7 +57,7 @@ namespace CMG.BallMazeGame.Data
                 InputData = _boardInput.BoardInput
             };
             
-            _gameDataArray[index++] = data;
+            _gameDataArray[_index++] = data;
         }
     }
 

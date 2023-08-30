@@ -13,6 +13,15 @@ namespace CMG.BallMazeGame
         [SerializeField] private Transform _ballStartPosition;
         [SerializeField] private Rigidbody _rigidbody;
 
+        [SerializeField] private float _correctionRayRange = 2;
+
+        private Vector3 _boundsSize;
+
+        private void Start()
+        {
+            _boundsSize = GetComponent<Collider>().bounds.size;
+        }
+        
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("SubtractLife"))
@@ -46,17 +55,17 @@ namespace CMG.BallMazeGame
         private void Update()
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position,transform.InverseTransformDirection(transform.up),out hit,0.03f))
+            if (Physics.Raycast(transform.position,transform.InverseTransformDirection(transform.up),out hit,_correctionRayRange))
             {
                 Debug.Log(hit.collider.name);
-                transform.position = hit.point + new Vector3(0, 0.05f, 0);
+                transform.position = hit.point + new Vector3(0, _boundsSize.y, 0);
             }   
         }
         
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position,transform.InverseTransformDirection(transform.up*0.03f));
+            Gizmos.DrawRay(transform.position,transform.InverseTransformDirection(transform.up*_correctionRayRange));
         }
     }
 }

@@ -78,6 +78,8 @@ namespace CMG.BallMazeGame
             if (_resetRoutine != null)
                 StopCoroutine(_resetRoutine);
             
+            Debug.Log("Resetting");
+            
             _resetRoutine = StartCoroutine(ResetGamePositionsRoutine());
         }
 
