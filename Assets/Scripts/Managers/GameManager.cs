@@ -94,6 +94,7 @@ namespace CMG.BallMazeGame
 
         public void HandleInput(float[] data)
         {
+            //Debug.Log($"x: {data[0]}, y: {data[1]}");
             _board.HandleInput(data);
         }
         
