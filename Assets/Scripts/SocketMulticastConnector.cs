@@ -15,8 +15,8 @@ namespace CMG.BallMazeGame
     internal sealed class SocketMulticastConnector : MonoBehaviour, IMulticastConnector
     {
         [Header("Multicast Settings")]
-        [SerializeField] private string _multicastGroup = "224.1.1.1";
-        [SerializeField] private int _multicastPort = 58008;
+        [SerializeField] private string _multicastGroup = "239.1.1.1";
+        [SerializeField] private int _multicastPort = 5432;
 
         private Socket _socket;
         private Thread _multicastSenderThread;

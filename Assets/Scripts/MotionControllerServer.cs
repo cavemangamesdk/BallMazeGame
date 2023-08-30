@@ -44,7 +44,7 @@ namespace CMG.BallMazeGame
         protected override void OnMessage(MessageEventArgs e)
         {
             //TextTester.Instance.SetText(e.Data);
-            //Debug.Log($"Data: {e.Data}");
+            Debug.Log($"Data: {e.Data}");
             var splitString = e.Data.Split(',');
             float[] dataSet = new float[2];
             for (int i = 0; i < splitString.Length; i++)
