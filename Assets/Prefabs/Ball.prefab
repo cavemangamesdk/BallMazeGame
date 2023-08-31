@@ -148,3 +148,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballStartPosition: {fileID: 0}
   _rigidbody: {fileID: 34781981780183240}
+  _correctionRayRange: 2

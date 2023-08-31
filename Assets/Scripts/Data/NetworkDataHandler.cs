@@ -24,7 +24,7 @@ namespace CMG.BallMazeGame.Data
             if (requestRoutine != null)
                 StopCoroutine(requestRoutine);
 
-            File.WriteAllText("D:\\Projects\\data.txt", json);
+            //File.WriteAllText("D:\\Projects\\data.txt", json);
 
             requestRoutine = StartCoroutine(HandleWebrequestRoutine(json));
         }

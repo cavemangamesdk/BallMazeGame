@@ -14,6 +14,7 @@ namespace CMG.BallMazeGame
         
         [SerializeField] private GameObject _menuCamera;
         [SerializeField] private GameObject _gameCamera;
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
         
         [SerializeField] private Board _board;
         [SerializeField] private Ball _ball;
@@ -42,6 +43,7 @@ namespace CMG.BallMazeGame
             _ball.ResetEvent += OnResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
             _ball.LostLife += OnLostLife;
+            _virtualCamera = _gameCamera.GetComponent<CinemachineVirtualCamera>();
         }
 
 
@@ -65,7 +67,7 @@ namespace CMG.BallMazeGame
         
         private void OnLostLife()
         {
-            _gameCamera.GetComponent<CinemachineVirtualCamera>().Follow = null;
+            _virtualCamera.Follow = null;
         }
         
         public void ResetGame(PlayerData playerData)
@@ -78,23 +80,24 @@ namespace CMG.BallMazeGame
             if (_resetRoutine != null)
                 StopCoroutine(_resetRoutine);
             
-            Debug.Log("Resetting");
+            //Debug.Log("Resetting");
             
             _resetRoutine = StartCoroutine(ResetGamePositionsRoutine());
         }
 
         private IEnumerator ResetGamePositionsRoutine()
         {
+            _virtualCamera.Follow = null;
             yield return new WaitForSeconds(.5f);
             ResetBoard();
             yield return new WaitForSeconds(.2f);
             ResetBall();
-            _gameCamera.GetComponent<CinemachineVirtualCamera>().Follow = _ball.transform;
+            _virtualCamera.Follow = _ball.transform;
         }
 
         public void HandleInput(float[] data)
         {
-            //Debug.Log($"x: {data[0]}, y: {data[1]}");
+            //Debug.Log($"x: {data[0]}, z: {data[1]}");
             _board.HandleInput(data);
         }
         

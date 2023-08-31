@@ -7,6 +7,7 @@ namespace CMG.BallMazeGame
         [SerializeField] private float _tiltSpeedModifier = 1;
         [SerializeField] private Transform _innerBoard;
         [SerializeField] private Transform _outerBoard;
+        [SerializeField] private float _boardClampValue = 10;
 
         public Vector2 BoardInput { get; private set; }
         
@@ -24,9 +25,6 @@ namespace CMG.BallMazeGame
 
         public void HandleInput(float[] data)
         {
-            // Debug.Log($"X Raw: {data.pitch}");
-            // Debug.Log($"Z Raw: {data.roll}");
-
             _xRot = data[0];
             _zRot = data[1];
 
@@ -46,8 +44,8 @@ namespace CMG.BallMazeGame
         {
             if (GameManager.Instance.GameOver == true) return;
             
-            _xRot = Mathf.Clamp(_xRot, -8.0f, 8.0f);
-            _zRot = Mathf.Clamp(_zRot, -8.0f, 8.0f);
+            _xRot = Mathf.Clamp(_xRot, -_boardClampValue, _boardClampValue);
+            _zRot = Mathf.Clamp(_zRot, -_boardClampValue, _boardClampValue);
             
             _innerBoard.localRotation = Quaternion.Euler(_xRot, 0, 0);
             _outerBoard.localRotation = Quaternion.Euler(0, 0, _zRot);

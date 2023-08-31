@@ -1,4 +1,7 @@
 using System;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using CMG.BallMazeGame.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +24,7 @@ namespace CMG.BallMazeGame
         [SerializeField] private GameObject _gameOverScreen;
 
         [SerializeField] private TextMeshProUGUI _timeTxt;
+        [SerializeField] private TextMeshProUGUI _ipTxt;
         [SerializeField] private TMP_InputField _nameInputField;
         [SerializeField] private Button _submitButton;
 
@@ -36,6 +40,10 @@ namespace CMG.BallMazeGame
 
                 return char.ToUpper(c);
             };
+            
+            _ipTxt.text =  Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                .First(ips => ips.AddressFamily == AddressFamily.InterNetwork)
+                .ToString();
         }
 
         public void StartTimer()
@@ -111,6 +119,8 @@ namespace CMG.BallMazeGame
         {
             _gameOverScreen.SetActive(show);
             _nameInputField.text = "";
+            _nameInputField.ActivateInputField();
+            _nameInputField.Select();
         }
 
         public void AddTimeTxt(string time)
@@ -118,7 +128,7 @@ namespace CMG.BallMazeGame
             _timeTxt.text = time;
         }
 
-        private void SubmitPlayerData()
+        public void SubmitPlayerData()
         {
             var result = GameManager.Instance.Lives > 0
                 ? $"won the game with {GameManager.Instance.Lives} lives left"

@@ -17,6 +17,8 @@ namespace CMG.BallMazeGame
 
         private Vector3 _boundsSize;
 
+        private bool _isDead = false;
+        
         private void Start()
         {
             _boundsSize = GetComponent<Collider>().bounds.size;
@@ -24,19 +26,22 @@ namespace CMG.BallMazeGame
         
         private void OnCollisionEnter(Collision collision)
         {
+            if (_isDead == true) return;
+            
             if (collision.gameObject.CompareTag("SubtractLife"))
             {
-                LostLife?.Invoke();
+                ResetEvent?.Invoke();
                 GameManager.Instance.SubtractLife();
+                _isDead = true;
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("ResetZone"))
-            {
-                ResetEvent?.Invoke();
-            }
+            // if (other.CompareTag("ResetZone"))
+            // {
+            //     ResetEvent?.Invoke();
+            // }
 
             if (other.CompareTag("FinishZone"))
             {
@@ -49,6 +54,7 @@ namespace CMG.BallMazeGame
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.Sleep();
             transform.position = _ballStartPosition.position;
+            _isDead = false;
         }
 
         
@@ -57,7 +63,7 @@ namespace CMG.BallMazeGame
             RaycastHit hit;
             if (Physics.Raycast(transform.position,transform.InverseTransformDirection(transform.up),out hit,_correctionRayRange))
             {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
                 transform.position = hit.point + new Vector3(0, _boundsSize.y, 0);
             }   
         }
