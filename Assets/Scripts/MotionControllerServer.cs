@@ -10,32 +10,56 @@ namespace CMG.BallMazeGame
     {
         [SerializeField] private int _port;
         
-        private UdpClient _listener;
-        private IPEndPoint _endPoint;
-        private AsyncCallback _asyncCallback;
-        private object _object = null;
-        private byte[] _receivedPacket;
+        private UdpClient _orientationListener;
+        private UdpClient _joystickListener;
 
+        private IPEndPoint _orientationEndPoint;
+        private IPEndPoint _joystickEndPoint;
+
+        private AsyncCallback _orientationAsyncCallback;
+        private AsyncCallback _joystickAsyncCallback;
+
+        private byte[] _orientationPacket;
+        private byte[] _joystickPacket;
+
+        private object _object = null;
         private void Start()
         {
-            _endPoint = new IPEndPoint(IPAddress.Any, _port);
-            _listener = new UdpClient();
-            _listener.Client.Bind(_endPoint);
-            _asyncCallback = new AsyncCallback(ReceiveData);
-            _listener.BeginReceive(_asyncCallback,_object);
+            _orientationEndPoint = new IPEndPoint(IPAddress.Any, _port);
+            _joystickEndPoint = new IPEndPoint(IPAddress.Any, _port+1);
+
+            _orientationListener = new UdpClient();
+            _joystickListener = new UdpClient();
+
+            _orientationListener.Client.Bind(_orientationEndPoint);
+            _joystickListener.Client.Bind(_joystickEndPoint);
+
+            _orientationAsyncCallback = new AsyncCallback(ReceiveOrientationData);
+            _joystickAsyncCallback = new AsyncCallback(ReceiveJoystickData);
+
+            _orientationListener.BeginReceive(_orientationAsyncCallback,_object);
+            _joystickListener.BeginReceive(_joystickAsyncCallback,_object);
         }
 
-        private void ReceiveData(IAsyncResult result)
+        private void ReceiveOrientationData(IAsyncResult result)
         {
-            _receivedPacket = _listener.EndReceive(result, ref _endPoint);
-            ParsePacket();
+            _orientationPacket = _orientationListener.EndReceive(result, ref _orientationEndPoint);
+            ParseOrientationPacket();
 
-            _listener.BeginReceive(_asyncCallback, _object);
+            _orientationListener.BeginReceive(_orientationAsyncCallback, _object);
         }
 
-        private void ParsePacket()
+        private void ReceiveJoystickData(IAsyncResult result)
         {
-            var data = Encoding.ASCII.GetString(_receivedPacket).Split(',');
+            _joystickPacket = _joystickListener.EndReceive(result, ref _joystickEndPoint);
+            ParseJoystickPacket();
+
+            _joystickListener.BeginReceive(_joystickAsyncCallback, _object);
+        }
+        
+        private void ParseOrientationPacket()
+        {
+            var data = Encoding.ASCII.GetString(_orientationPacket).Split(',');
             //Debug.Log(data);
             float[] dataSet = new float[2];
             for (int i = 0; i < data.Length; i++)
@@ -45,10 +69,19 @@ namespace CMG.BallMazeGame
             
             GameManager.Instance.HandleInput(dataSet);
         }
+        
+        private void ParseJoystickPacket()
+        {
+            var data = Encoding.ASCII.GetString(_joystickPacket).Split(',');
+            foreach (var str in data)
+            {
+                Debug.Log(str);
+            }
+        }
 
         private void OnApplicationQuit()
         {
-            _listener.Close();
+            _orientationListener.Close();
         }
     }
 }
