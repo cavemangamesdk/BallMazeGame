@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace CMG.BallMazeGame
 {
     internal static class NetworkUtils
     {
-        internal static (string hostname, string ip) GetLocalHostNameAndIPAddress()
+        internal static string GetLocalIPAddress()
         {
-            var hostname = Dns.GetHostName();
             string ip = null;
 
             foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
@@ -36,7 +33,7 @@ namespace CMG.BallMazeGame
                 }
             }
 
-            return (hostname, ip);
+            return (ip);
         }
 
 
@@ -50,11 +47,5 @@ namespace CMG.BallMazeGame
 
         //    return (hostname, ip);
         //}
-
-        internal static string GetLocalIPAddress()
-        {
-            (var _, var ip) = GetLocalHostNameAndIPAddress();
-            return ip;
-        }
     }
 }
