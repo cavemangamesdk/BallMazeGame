@@ -8,8 +8,6 @@ namespace CMG.BallMazeGame
         public event Action ResetEvent;
         public event Action FinishEvent;
 
-        public event Action LostLife;
-
         [SerializeField] private Transform _ballStartPosition;
         [SerializeField] private Rigidbody _rigidbody;
 
@@ -18,6 +16,7 @@ namespace CMG.BallMazeGame
         private Vector3 _boundsSize;
 
         private bool _isDead = false;
+        private bool _checkForCorrection = true;
         
         private void Start()
         {
@@ -47,6 +46,7 @@ namespace CMG.BallMazeGame
             {
                 //Disable raycasting until we reset ball...
                 Debug.Log("We hit a hole!");
+                _checkForCorrection = false;
             }
             
             if (other.CompareTag("FinishZone"))
@@ -61,11 +61,14 @@ namespace CMG.BallMazeGame
             _rigidbody.Sleep();
             transform.position = _ballStartPosition.position;
             _isDead = false;
+            _checkForCorrection = true;
         }
 
         
         private void Update()
         {
+            if (_checkForCorrection == false) return;
+
             RaycastHit hit;
             if (Physics.Raycast(transform.position,transform.InverseTransformDirection(transform.up),out hit,_correctionRayRange))
             {

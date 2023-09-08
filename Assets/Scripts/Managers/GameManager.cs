@@ -8,7 +8,6 @@ namespace CMG.BallMazeGame
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
-        //public bool GameRunning { get; private set; }
         public UIManager UIManager { get; private set; }
         public int Lives { get => _lives; }
         
@@ -45,7 +44,6 @@ namespace CMG.BallMazeGame
             
             _ball.ResetEvent += OnResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
-            _ball.LostLife += OnLostLife;
             _virtualCamera = _gameCamera.GetComponent<CinemachineVirtualCamera>();
             _motionController.OnJoystickPressed += OnJoystickPressed;
             
@@ -83,12 +81,6 @@ namespace CMG.BallMazeGame
         private void OnFinishEvent()
         {
             ChangeState(GameState.GameOver);
-        }
-
-        
-        private void OnLostLife()
-        {
-            _virtualCamera.Follow = null;
         }
         
         public void ResetGame(PlayerData playerData)
