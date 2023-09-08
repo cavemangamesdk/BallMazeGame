@@ -6,6 +6,7 @@ using CMG.BallMazeGame.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Net.NetworkInformation;
 
 namespace CMG.BallMazeGame
 {
@@ -40,10 +41,43 @@ namespace CMG.BallMazeGame
 
                 return char.ToUpper(c);
             };
-            
-            _ipTxt.text =  Dns.GetHostEntry(Dns.GetHostName()).AddressList
-                .First(ips => ips.AddressFamily == AddressFamily.InterNetwork)
-                .ToString();
+
+            _ipTxt.text = GetLocalIPAddress();
+
+            //_ipTxt.text = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+            //    .First(ips => ips.AddressFamily == AddressFamily.InterNetwork)
+            //    .ToString();
+        }
+
+        internal string GetLocalIPAddress()
+        {
+            string ip = null;
+
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 &&
+                    ni.OperationalStatus == OperationalStatus.Up &&
+                    !ni.Description.ToLowerInvariant().Contains("virtual") &&
+                    !ni.Description.ToLowerInvariant().Contains("vEthernet") &&
+                    !ni.Description.ToLowerInvariant().Contains("hyper-v"))
+                {
+                    foreach (UnicastIPAddressInformation ipInfo in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            ip = ipInfo.Address.ToString();
+                            break;
+                        }
+                    }
+                }
+
+                if (ip != null)
+                {
+                    break;
+                }
+            }
+
+            return (ip);
         }
 
         public void StartTimer()
