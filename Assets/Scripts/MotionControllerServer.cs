@@ -8,7 +8,11 @@ namespace CMG.BallMazeGame
 {
     public class MotionControllerServer : MonoBehaviour
     {
+        public event Action OnJoystickPressed ;
+        
         [SerializeField] private int _port;
+
+        public string JoystickState = "";
         
         private UdpClient _orientationListener;
         private UdpClient _joystickListener;
@@ -72,11 +76,21 @@ namespace CMG.BallMazeGame
         
         private void ParseJoystickPacket()
         {
+            //if (GameManager.Instance.GameState != GameState.Start) return;
+
             var data = Encoding.ASCII.GetString(_joystickPacket).Split(',');
-            foreach (var str in data)
+
+            var state = data[1].ToLower();
+
+            Debug.Log(state);
+            
+            if (state == "released")
             {
-                Debug.Log(str);
+                Debug.Log("This breaks");
+                //JoystickState = state;
+                GameManager.Instance.OnJoystickPressed();
             }
+            //OnJoystickPressed?.Invoke();
         }
 
         private void OnApplicationQuit()

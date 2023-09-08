@@ -8,7 +8,7 @@ namespace CMG.BallMazeGame
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
-        public bool GameOver { get; private set; }
+        //public bool GameRunning { get; private set; }
         public UIManager UIManager { get; private set; }
         public int Lives { get => _lives; }
         
@@ -18,10 +18,11 @@ namespace CMG.BallMazeGame
         
         [SerializeField] private Board _board;
         [SerializeField] private Ball _ball;
+        [SerializeField] private MotionControllerServer _motionController;
         
         [SerializeField] private int _lives = 3;
 
-        private GameState _gameState = GameState.Start;
+        [HideInInspector] public GameState GameState { get; private set; }
         private Coroutine _resetRoutine;
         
         private void Awake()
@@ -36,6 +37,8 @@ namespace CMG.BallMazeGame
                 Destroy(this);
             }
 
+            GameState = GameState.Start;
+            
             UIManager = GetComponent<UIManager>();
 
             UIManager.SubmitEvent += ResetGame;
@@ -44,21 +47,37 @@ namespace CMG.BallMazeGame
             _ball.FinishEvent += OnFinishEvent;
             _ball.LostLife += OnLostLife;
             _virtualCamera = _gameCamera.GetComponent<CinemachineVirtualCamera>();
+            _motionController.OnJoystickPressed += OnJoystickPressed;
+            
+            ChangeState(GameState.Start);
         }
-
 
         private void Update()
         {
-            if (_gameState == GameState.Start)
+            if (GameState == GameState.Start)
             {
                 if (Input.anyKeyDown)
                 {
-                    Debug.Log("Starting game");
-                    ChangeState(GameState.GameRunning);
+                    // Debug.Log("Starting game");
+                    // ChangeState(GameState.GameRunning);
+                    OnJoystickPressed();
+                }
+
+                if (_motionController.JoystickState == "released")
+                {
+                    OnJoystickPressed();
                 }
             }
         }
 
+        public void OnJoystickPressed()
+        {
+            Debug.Log("Starting game");
+            
+            if (GameState == GameState.Start)
+                ChangeState(GameState.GameRunning);
+        }
+        
         private void OnFinishEvent()
         {
             ChangeState(GameState.GameOver);
@@ -125,7 +144,6 @@ namespace CMG.BallMazeGame
             switch (newState)
             {
                 case GameState.Start:
-                    GameOver = true;
                     _lives = 3;
                     UIManager.UpdateLivesUI(_lives);
                     UIManager.StopTimer();
@@ -133,7 +151,6 @@ namespace CMG.BallMazeGame
                     UIManager.HandleGameUI(newState);
                     break;
                 case GameState.GameRunning:
-                    GameOver = false;
                     _menuCamera.SetActive(false);
                     _gameCamera.SetActive(true);
                     UIManager.ResetTimer();
@@ -141,7 +158,6 @@ namespace CMG.BallMazeGame
                     UIManager.HandleGameUI(newState);
                     break;
                 case GameState.GameOver:
-                    GameOver = true;
                     _menuCamera.SetActive(true);
                     _gameCamera.SetActive(false);
                     OnResetGamePosition();
@@ -150,7 +166,7 @@ namespace CMG.BallMazeGame
                     break;
             }
 
-            _gameState = newState;
+            GameState = newState;
         }
     }
 

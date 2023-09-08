@@ -43,6 +43,12 @@ namespace CMG.BallMazeGame
             //     ResetEvent?.Invoke();
             // }
 
+            if (other.CompareTag("Hole"))
+            {
+                //Disable raycasting until we reset ball...
+                Debug.Log("We hit a hole!");
+            }
+            
             if (other.CompareTag("FinishZone"))
             {
                 FinishEvent?.Invoke();

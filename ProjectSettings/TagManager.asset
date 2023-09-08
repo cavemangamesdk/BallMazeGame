@@ -11,6 +11,7 @@ TagManager:
   - Board
   - InnerBoard
   - OuterBoard
+  - Hole
   layers:
   - Default
   - TransparentFX

@@ -47,7 +47,7 @@ namespace CMG.BallMazeGame.Data
 
         private void Update()
         {
-            if (GameManager.Instance.GameOver == true) return;
+            if (GameManager.Instance.GameState != GameState.GameRunning) return;
 
             var data = new GameData()
             {

@@ -42,7 +42,7 @@ namespace CMG.BallMazeGame
 
         private void SetRotation()
         {
-            if (GameManager.Instance.GameOver == true) return;
+            if (GameManager.Instance.GameState != GameState.GameRunning) return;
             
             _xRot = Mathf.Clamp(_xRot, -_boardClampValue, _boardClampValue);
             _zRot = Mathf.Clamp(_zRot, -_boardClampValue, _boardClampValue);
