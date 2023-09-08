@@ -57,13 +57,11 @@ namespace CMG.BallMazeGame
             if (GameState == GameState.Start)
             {
                 if (Input.anyKeyDown)
-                {
-                    // Debug.Log("Starting game");
-                    // ChangeState(GameState.GameRunning);
-                    OnJoystickPressed();
+                { 
+                    ChangeState(GameState.GameRunning);
                 }
 
-                if (_motionController.JoystickState == "released")
+                if (_motionController.JoystickState == "pressed")
                 {
                     OnJoystickPressed();
                 }
@@ -72,10 +70,14 @@ namespace CMG.BallMazeGame
 
         public void OnJoystickPressed()
         {
-            Debug.Log("Starting game");
-            
             if (GameState == GameState.Start)
                 ChangeState(GameState.GameRunning);
+
+            if (GameState == GameState.GameOver)
+            {
+                Debug.Log("Sending data!");
+                UIManager.SubmitPlayerData();
+            }
         }
         
         private void OnFinishEvent()

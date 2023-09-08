@@ -76,7 +76,7 @@ namespace CMG.BallMazeGame
         
         private void ParseJoystickPacket()
         {
-            //if (GameManager.Instance.GameState != GameState.Start) return;
+            if (GameManager.Instance.GameState == GameState.GameRunning) return;
 
             var data = Encoding.ASCII.GetString(_joystickPacket).Split(',');
 
@@ -84,13 +84,7 @@ namespace CMG.BallMazeGame
 
             Debug.Log(state);
             
-            if (state == "released")
-            {
-                Debug.Log("This breaks");
-                //JoystickState = state;
-                GameManager.Instance.OnJoystickPressed();
-            }
-            //OnJoystickPressed?.Invoke();
+            JoystickState = state;
         }
 
         private void OnApplicationQuit()
