@@ -82,6 +82,7 @@ namespace CMG.BallMazeGame
         private void OnApplicationQuit()
         {
             _orientationListener.Close();
+            _joystickListener.Close();
         }
     }
 }
