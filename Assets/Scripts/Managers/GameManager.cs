@@ -74,7 +74,7 @@ namespace CMG.BallMazeGame
             if (GameState == GameState.GameOver)
             {
                 Debug.Log("Sending data!");
-                UIManager.SubmitPlayerData();
+                UIManager.SubmitButton.onClick?.Invoke();
             }
         }
         

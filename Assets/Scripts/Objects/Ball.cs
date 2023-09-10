@@ -8,6 +8,8 @@ namespace CMG.BallMazeGame
         public event Action ResetEvent;
         public event Action FinishEvent;
 
+        public event Action HoleEvent;
+
         [SerializeField] private Transform _ballStartPosition;
         [SerializeField] private Rigidbody _rigidbody;
 
@@ -45,8 +47,9 @@ namespace CMG.BallMazeGame
             if (other.CompareTag("Hole"))
             {
                 //Disable raycasting until we reset ball...
-                Debug.Log("We hit a hole!");
+                //Debug.Log("We hit a hole!");
                 _checkForCorrection = false;
+                HoleEvent?.Invoke();
             }
             
             if (other.CompareTag("FinishZone"))

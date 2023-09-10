@@ -25,6 +25,8 @@ namespace CMG.BallMazeGame
         [SerializeField] private TMP_InputField _nameInputField;
         [SerializeField] private Button _submitButton;
 
+        public Button SubmitButton => _submitButton;
+        
         private void Awake()
         {
             _submitButton.onClick.AddListener(SubmitPlayerData);

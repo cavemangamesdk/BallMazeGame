@@ -12,8 +12,8 @@ namespace CMG.BallMazeGame.Data
         private Transform _innerBoardRot;
         private Board _boardInput;
 
-        [SerializeField] private GameData[] _gameDataArray = new GameData[200000];
-        private List<Vector3> _lostLifePositions = new List<Vector3>();
+        [SerializeField] private List<Vector3> _lostLifePositions = new List<Vector3>();
+        [HideInInspector] private GameData[] _gameDataArray = new GameData[200000];
         private int _index = 0;
         
         private void Awake()
@@ -23,7 +23,7 @@ namespace CMG.BallMazeGame.Data
             _outerboardRot = GameObject.FindWithTag("OuterBoard").GetComponent<Transform>();
             _boardInput = GameObject.FindWithTag("Board").GetComponent<Board>();
             
-            //_ballPos.GetComponent<Ball>().HoleEvent += OnHoleEvent;
+            _ballPos.GetComponent<Ball>().HoleEvent += OnHoleEvent;
         }
 
         private void OnHoleEvent()
