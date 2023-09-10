@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace CMG.BallMazeGame.Data
         private Board _boardInput;
 
         [SerializeField] private GameData[] _gameDataArray = new GameData[200000];
-
+        private List<Vector3> _lostLifePositions = new List<Vector3>();
         private int _index = 0;
         
         private void Awake()
@@ -21,6 +22,13 @@ namespace CMG.BallMazeGame.Data
             _innerBoardRot = GameObject.FindWithTag("InnerBoard").GetComponent<Transform>();
             _outerboardRot = GameObject.FindWithTag("OuterBoard").GetComponent<Transform>();
             _boardInput = GameObject.FindWithTag("Board").GetComponent<Board>();
+            
+            //_ballPos.GetComponent<Ball>().HoleEvent += OnHoleEvent;
+        }
+
+        private void OnHoleEvent()
+        {
+            _lostLifePositions.Add(_ballPos.position);
         }
 
         private void Start()
@@ -36,7 +44,8 @@ namespace CMG.BallMazeGame.Data
             {
                 Guid = Guid.NewGuid().ToString(),
                 GameData = array,
-                PlayerData = playerData
+                PlayerData = playerData,
+                LostLifePosition = _lostLifePositions.ToArray()
             };
             
             NetworkDataHandler.Instance.HandleWebrequest(sessionData);
@@ -84,5 +93,6 @@ namespace CMG.BallMazeGame.Data
         public string Guid;
         public PlayerData PlayerData;
         public GameData[] GameData;
+        public Vector3[] LostLifePosition;
     }
 }
