@@ -8,8 +8,6 @@ namespace CMG.BallMazeGame
 {
     public class MotionControllerServer : MonoBehaviour
     {
-        public event Action OnJoystickPressed ;
-        
         [SerializeField] private int _port;
 
         public string JoystickState = "";
@@ -82,7 +80,7 @@ namespace CMG.BallMazeGame
 
             var state = data[1].ToLower();
 
-            Debug.Log(state);
+            //Debug.Log(state);
             
             JoystickState = state;
         }

@@ -45,7 +45,6 @@ namespace CMG.BallMazeGame
             _ball.ResetEvent += OnResetGamePosition;
             _ball.FinishEvent += OnFinishEvent;
             _virtualCamera = _gameCamera.GetComponent<CinemachineVirtualCamera>();
-            _motionController.OnJoystickPressed += OnJoystickPressed;
             
             ChangeState(GameState.Start);
         }
@@ -71,11 +70,11 @@ namespace CMG.BallMazeGame
             if (GameState == GameState.Start)
                 ChangeState(GameState.GameRunning);
 
-            if (GameState == GameState.GameOver)
-            {
-                Debug.Log("Sending data!");
-                UIManager.SubmitButton.onClick?.Invoke();
-            }
+            // if (GameState == GameState.GameOver)
+            // {
+            //     //Debug.Log("Sending data!");
+            //     UIManager.SubmitButton.onClick?.Invoke();
+            // }
         }
         
         private void OnFinishEvent()

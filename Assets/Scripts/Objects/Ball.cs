@@ -39,11 +39,8 @@ namespace CMG.BallMazeGame
 
         private void OnTriggerEnter(Collider other)
         {
-            // if (other.CompareTag("ResetZone"))
-            // {
-            //     ResetEvent?.Invoke();
-            // }
-
+            Debug.Log($"Ball hit {other.name} trigger");
+            
             if (other.CompareTag("Hole"))
             {
                 //Disable raycasting until we reset ball...
