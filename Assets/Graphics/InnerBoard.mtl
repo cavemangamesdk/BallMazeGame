@@ -1,0 +1,22 @@
+# Blender 3.3.1 MTL File: 'None'
+# www.blender.org
+
+newmtl board
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Labyrinth.fbm/board.png
+map_Ns Labyrinth.fbm/roughness.png
+map_d Labyrinth.fbm/board.png
+
+newmtl wood
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Labyrinth.fbm/box.png
+map_Ns Labyrinth.fbm/roughness.png
